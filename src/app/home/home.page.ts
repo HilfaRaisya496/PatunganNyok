@@ -30,7 +30,7 @@ export class HomePage {
   ];
   showItemDetailsInReceipt: boolean = true;
 
-  constructor(private historyService: HistoryService) {}
+  constructor(private historyService: HistoryService) { }
 
   // ─────────────────────────────────────────────────────
   // Even Split Computed
