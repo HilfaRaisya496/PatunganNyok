@@ -1,20 +1,418 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding custom-background">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- ── Hero Header ── -->
+  <div class="hero-header">
+    <div class="logo-wrapper">
+      <div class="logo-icon" style="background: none; padding: 0;">
+        <img src="assets/logo.png" alt="PatunganNyok Logo" style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;" />
+      </div>
+      <div class="logo-text-group">
+        <h1 class="logo-title">PatunganNyok</h1>
+      </div>
+    </div>
+    <p class="header-subtitle">PatunganNyok bikin urusan patungan jadi beres 💸</p>
   </div>
+
+  <!-- ── Mode Toggle ── -->
+  <div class="mode-toggle-wrapper">
+    <div class="mode-toggle">
+      <button
+        class="mode-btn"
+        [class.active]="splitMode === 'even'"
+        (click)="splitMode = 'even'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Rata
+      </button>
+      <button
+        class="mode-btn"
+        [class.active]="splitMode === 'custom'"
+        (click)="splitMode = 'custom'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <line x1="8" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="3" y1="6" x2="3.01" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="3" y1="12" x2="3.01" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="3" y1="18" x2="3.01" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Per Item
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       MODE: RATA (Even Split)
+  ════════════════════════════════════════════ -->
+  <ng-container *ngIf="splitMode === 'even'">
+
+    <div class="main-card">
+      <div class="card-section">
+        <div class="section-label">
+          <span class="section-icon">💰</span>
+          <span>Detail Tagihan</span>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Total Tagihan</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">Rp</span>
+            <ion-input type="number" [(ngModel)]="billAmount" placeholder="0" class="styled-input"></ion-input>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Jumlah Orang</label>
+          <div class="input-wrapper">
+            <span class="input-prefix">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <ion-input type="number" [(ngModel)]="numPeople" min="1" placeholder="1" class="styled-input"></ion-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-section">
+        <div class="section-label">
+          <span class="section-icon">📊</span>
+          <span>Biaya Tambahan</span>
+        </div>
+        <div class="two-col-inputs">
+          <div class="input-group">
+            <label class="input-label">Tip</label>
+            <div class="input-wrapper">
+              <ion-input type="number" [(ngModel)]="tipPercent" placeholder="0" class="styled-input percent-input"></ion-input>
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Servis</label>
+            <div class="input-wrapper">
+              <ion-input type="number" [(ngModel)]="servicePercent" placeholder="0" class="styled-input percent-input"></ion-input>
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-section toggle-section">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="section-icon">🔢</span>
+            <div>
+              <span class="toggle-title">Pembulatan</span>
+              <span class="toggle-desc">Bulatkan ke atas</span>
+            </div>
+          </div>
+          <ion-toggle [(ngModel)]="roundResult" color="primary"></ion-toggle>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result: Even -->
+    <div class="result-card">
+      <p class="result-label">Per orang bayar</p>
+      <div class="result-amount-box">
+        <span class="result-currency">Rp</span>
+        <h2 class="result-amount">{{ totalPerPerson | number: (roundResult ? '1.0-0' : '1.0-2') }}</h2>
+      </div>
+      <div class="result-breakdown">
+        <div class="breakdown-item">
+          <span>Tagihan</span>
+          <span>{{ (billAmount || 0) | number:'1.0-0' }}</span>
+        </div>
+        <div class="breakdown-item" *ngIf="tipPercent > 0">
+          <span>Tip ({{ tipPercent }}%)</span>
+          <span>+{{ (billAmount * tipPercent / 100) | number:'1.0-0' }}</span>
+        </div>
+        <div class="breakdown-item" *ngIf="servicePercent > 0">
+          <span>Servis ({{ servicePercent }}%)</span>
+          <span>+{{ (billAmount * servicePercent / 100) | number:'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- ════════════════════════════════════════════
+       MODE: PER ITEM (Custom Split)
+  ════════════════════════════════════════════ -->
+  <ng-container *ngIf="splitMode === 'custom'">
+
+    <!-- Biaya Tambahan (shared across modes) -->
+    <div class="main-card">
+      <div class="card-section">
+        <div class="section-label">
+          <span class="section-icon">📊</span>
+          <span>Biaya Tambahan (dibagi proporsional)</span>
+        </div>
+        <div class="two-col-inputs">
+          <div class="input-group">
+            <label class="input-label">Tip</label>
+            <div class="input-wrapper">
+              <ion-input type="number" [(ngModel)]="tipPercent" placeholder="0" class="styled-input percent-input"></ion-input>
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Servis</label>
+            <div class="input-wrapper">
+              <ion-input type="number" [(ngModel)]="servicePercent" placeholder="0" class="styled-input percent-input"></ion-input>
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-section toggle-section">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="section-icon">🔢</span>
+            <div>
+              <span class="toggle-title">Pembulatan</span>
+              <span class="toggle-desc">Bulatkan ke atas</span>
+            </div>
+          </div>
+          <ion-toggle [(ngModel)]="roundResult" color="primary"></ion-toggle>
+        </div>
+      </div>
+    </div>
+
+    <!-- Person Cards -->
+    <div class="people-list">
+      <div
+        class="person-card"
+        *ngFor="let person of people; trackBy: trackByPersonId; let i = index"
+        [style.animation-delay]="(i * 0.05) + 's'">
+
+        <!-- Person Header -->
+        <div class="person-header">
+          <div class="person-avatar">{{ person.name.charAt(0).toUpperCase() || '?' }}</div>
+          <ion-input
+            class="person-name-input"
+            [(ngModel)]="person.name"
+            placeholder="Nama orang">
+          </ion-input>
+          <button class="remove-person-btn" (click)="removePerson(person.id)" *ngIf="people.length > 1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Items List -->
+        <div class="items-list" *ngIf="person.items.length > 0">
+          <div
+            class="item-row"
+            *ngFor="let item of person.items; trackBy: trackByItemId">
+            <ion-input
+              class="item-name-input"
+              [(ngModel)]="item.name"
+              placeholder="Nama item">
+            </ion-input>
+            <div class="item-price-wrapper">
+              <span class="item-price-prefix">Rp</span>
+              <ion-input
+                type="number"
+                class="item-price-input"
+                [(ngModel)]="item.price"
+                placeholder="0">
+              </ion-input>
+            </div>
+            <button class="remove-item-btn" (click)="removeItem(person, item.id)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Empty items hint -->
+        <div class="no-items-hint" *ngIf="person.items.length === 0">
+          Belum ada item. Tap "+ Tambah Item" untuk mulai.
+        </div>
+
+        <!-- Person Footer -->
+        <div class="person-footer">
+          <button class="add-item-btn" (click)="addItem(person)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            Tambah Item
+          </button>
+          <div class="person-subtotal">
+            Subtotal: <strong>Rp {{ personSubtotal(person) | number:'1.0-0' }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Person Button -->
+    <button class="add-person-btn" (click)="addPerson()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+        <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Tambah Orang
+    </button>
+
+    <!-- Result: Per Person -->
+    <div class="custom-result-card" *ngIf="customGrandTotal > 0">
+      <div class="custom-result-header">
+        <p class="result-label">Rincian Tagihan</p>
+        <div class="grand-total-badge">
+          Total: Rp {{ customTotalWithFees | number:'1.0-0' }}
+        </div>
+      </div>
+
+      <div class="person-result-list">
+        <div class="person-result-row" *ngFor="let person of people; trackBy: trackByPersonId">
+          <div class="person-result-avatar">{{ person.name.charAt(0).toUpperCase() || '?' }}</div>
+          <div class="person-result-info">
+            <span class="person-result-name">{{ person.name }}</span>
+            <span class="person-result-items">{{ person.items.length }} item • Rp {{ personSubtotal(person) | number:'1.0-0' }}</span>
+          </div>
+          <div class="person-result-amount">
+            Rp {{ personTotal(person) | number:'1.0-0' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-result-fees" *ngIf="tipPercent > 0 || servicePercent > 0">
+        <div class="fee-row" *ngIf="tipPercent > 0">
+          <span>Tip ({{ tipPercent }}%)</span>
+          <span>+Rp {{ customTipAmount | number:'1.0-0' }}</span>
+        </div>
+        <div class="fee-row" *ngIf="servicePercent > 0">
+          <span>Servis ({{ servicePercent }}%)</span>
+          <span>+Rp {{ customServiceAmount | number:'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty custom state -->
+    <div class="custom-empty" *ngIf="customGrandTotal === 0">
+      <span>👆 Tambahkan item untuk melihat hasil</span>
+    </div>
+
+  </ng-container>
+
+  <div class="main-card" *ngIf="splitMode === 'custom'">
+    <div class="card-section toggle-section">
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="section-icon">🧾</span>
+          <div>
+            <span class="toggle-title">Detail Item di Struk</span>
+            <span class="toggle-desc">Tampilkan item tiap orang saat dibagikan</span>
+          </div>
+        </div>
+        <ion-toggle [(ngModel)]="showItemDetailsInReceipt" color="primary"></ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Action Button ── -->
+  <div class="action-section">
+    <ion-button expand="block" shape="round" class="share-btn" (click)="shareResult()">
+      <svg slot="start" width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Simpan &amp; Bagikan
+    </ion-button>
+  </div>
+
+  <!-- Hidden Receipt Template -->
+  <div id="receipt-template" class="receipt-container">
+    <div class="receipt-header">
+      <h2>PatunganNyok</h2>
+      <p>{{ splitMode === 'even' ? 'Split Rata' : 'Per Item' }}</p>
+    </div>
+    <div class="receipt-divider"></div>
+
+    <!-- Even mode receipt -->
+    <ng-container *ngIf="splitMode === 'even'">
+      <div class="receipt-row">
+        <span>Total Bill</span>
+        <span>{{ billAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+      <div class="receipt-row">
+        <span>People</span>
+        <span>{{ numPeople }}</span>
+      </div>
+      <div class="receipt-row" *ngIf="tipPercent > 0">
+        <span>Tip ({{ tipPercent }}%)</span>
+        <span>+{{ (billAmount * tipPercent / 100) | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+      <div class="receipt-row" *ngIf="servicePercent > 0">
+        <span>Service ({{ servicePercent }}%)</span>
+        <span>+{{ (billAmount * servicePercent / 100) | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+      <div class="receipt-divider"></div>
+      <div class="receipt-total">
+        <span>Per Person</span>
+        <span>{{ totalPerPerson | currency:'IDR':'symbol': (roundResult ? '1.0-0' : '1.2-2') }}</span>
+      </div>
+    </ng-container>
+
+    <!-- Custom mode receipt -->
+    <ng-container *ngIf="splitMode === 'custom'">
+      <ng-container *ngFor="let p of people">
+        <div class="receipt-row">
+          <span>{{ p.name }}</span>
+          <span>{{ personTotal(p) | currency:'IDR':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="receipt-subrow" *ngIf="showItemDetailsInReceipt" >
+          <div class="receipt-item-row" *ngFor="let item of p.items">
+            <span>- {{ item.name || 'Item' }}</span>
+            <span>{{ (item.price || 0) | currency:'IDR':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="receipt-item-row" *ngIf="personTipAmount(p) > 0">
+            <span>- Tip ({{ tipPercent }}%)</span>
+            <span>{{ personTipAmount(p) | currency:'IDR':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="receipt-item-row" *ngIf="personServiceAmount(p) > 0">
+            <span>- Servis ({{ servicePercent }}%)</span>
+            <span>{{ personServiceAmount(p) | currency:'IDR':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="receipt-item-empty" *ngIf="p.items.length === 0">- Tidak ada item</div>
+        </div>
+      </ng-container>
+      <div class="receipt-row" *ngIf="tipPercent > 0">
+        <span>Tip ({{ tipPercent }}%)</span>
+        <span>+{{ customTipAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+      <div class="receipt-row" *ngIf="servicePercent > 0">
+        <span>Service ({{ servicePercent }}%)</span>
+        <span>+{{ customServiceAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+      <div class="receipt-divider"></div>
+      <div class="receipt-total">
+        <span>Total</span>
+        <span>{{ customTotalWithFees | currency:'IDR':'symbol':'1.0-0' }}</span>
+      </div>
+    </ng-container>
+
+    <div class="receipt-footer">
+      <p>Thank you!</p>
+      <p>Dibagikan via PatunganNyok</p>
+    </div>
+  </div>
+
 </ion-content>

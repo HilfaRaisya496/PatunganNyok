@@ -1,0 +1,66 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="toolbar-content">
+      <h1 class="page-title">Pengaturan</h1>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding custom-background">
+
+  <!-- App Brand Section -->
+  <div class="brand-section">
+    <div class="brand-logo" style="background: none; box-shadow: none;">
+      <img src="assets/logo.png" alt="PatunganNyok Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" />
+    </div>
+    <div>
+      <h2 class="brand-name">PatunganNyok</h2>
+      <p class="brand-version">Versi 1.0.0</p>
+    </div>
+  </div>
+
+  <!-- Appearance Section -->
+  <div class="settings-section">
+    <p class="settings-section-label">Tampilan</p>
+    <div class="settings-card">
+      <div class="settings-item">
+        <div class="settings-item-icon" style="background: linear-gradient(135deg, #6366f1, #818cf8)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="settings-item-info">
+          <span class="settings-item-title">Tema Gelap</span>
+          <span class="settings-item-desc">Tampilan malam hari</span>
+        </div>
+        <ion-toggle
+          slot="end"
+          [checked]="theme.isDark()"
+          (ionChange)="toggleTheme($event)"
+          color="primary">
+        </ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="settings-section">
+    <p class="settings-section-label">Tentang</p>
+    <div class="settings-card">
+      <div class="settings-item no-border">
+        <div class="settings-item-icon" style="background: linear-gradient(135deg, #f97066, #fb8f87)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+            <line x1="12" y1="8" x2="12" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="16" x2="12.01" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="settings-item-info">
+          <span class="settings-item-title">PatunganNyok App</span>
+          <span class="settings-item-desc">Bagi tagihan dengan mudah & cepat</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

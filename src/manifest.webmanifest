@@ -1,0 +1,11 @@
+{
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    }
+  ],
+  "background_color": "#f0f2ff"
+}
