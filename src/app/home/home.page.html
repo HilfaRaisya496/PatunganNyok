@@ -349,11 +349,11 @@
     <!-- Even mode receipt -->
     <ng-container *ngIf="splitMode === 'even'">
       <div class="receipt-row">
-        <span>Total Bill</span>
+        <span>Total Tagihan</span>
         <span>{{ billAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
       </div>
       <div class="receipt-row">
-        <span>People</span>
+        <span>Jumlah Orang</span>
         <span>{{ numPeople }}</span>
       </div>
       <div class="receipt-row" *ngIf="tipPercent > 0">
@@ -361,12 +361,12 @@
         <span>+{{ (billAmount * tipPercent / 100) | currency:'IDR':'symbol':'1.0-0' }}</span>
       </div>
       <div class="receipt-row" *ngIf="servicePercent > 0">
-        <span>Service ({{ servicePercent }}%)</span>
+        <span>Servis ({{ servicePercent }}%)</span>
         <span>+{{ (billAmount * servicePercent / 100) | currency:'IDR':'symbol':'1.0-0' }}</span>
       </div>
       <div class="receipt-divider"></div>
       <div class="receipt-total">
-        <span>Per Person</span>
+        <span>Per Orang</span>
         <span>{{ totalPerPerson | currency:'IDR':'symbol': (roundResult ? '1.0-0' : '1.2-2') }}</span>
       </div>
     </ng-container>
@@ -399,7 +399,7 @@
         <span>+{{ customTipAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
       </div>
       <div class="receipt-row" *ngIf="servicePercent > 0">
-        <span>Service ({{ servicePercent }}%)</span>
+        <span>Servis ({{ servicePercent }}%)</span>
         <span>+{{ customServiceAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
       </div>
       <div class="receipt-divider"></div>
@@ -410,7 +410,7 @@
     </ng-container>
 
     <div class="receipt-footer">
-      <p>Thank you!</p>
+      <p>Terima Kasih!</p>
       <p>Dibagikan via PatunganNyok</p>
     </div>
   </div>
