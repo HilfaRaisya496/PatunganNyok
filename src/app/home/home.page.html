@@ -1,6 +1,5 @@
 <ion-content [fullscreen]="true" class="ion-padding custom-background">
 
-  <!-- ── Hero Header ── -->
   <div class="hero-header">
     <div class="logo-wrapper">
       <div class="logo-icon" style="background: none; padding: 0;">
@@ -13,7 +12,6 @@
     <p class="header-subtitle">PatunganNyok bikin urusan patungan jadi beres 💸</p>
   </div>
 
-  <!-- ── Mode Toggle ── -->
   <div class="mode-toggle-wrapper">
     <div class="mode-toggle">
       <button
@@ -44,9 +42,6 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════
-       MODE: RATA (Even Split)
-  ════════════════════════════════════════════ -->
   <ng-container *ngIf="splitMode === 'even'">
 
     <div class="main-card">
@@ -120,7 +115,6 @@
       </div>
     </div>
 
-    <!-- Result: Even -->
     <div class="result-card">
       <p class="result-label">Per orang bayar</p>
       <div class="result-amount-box">
@@ -145,12 +139,8 @@
 
   </ng-container>
 
-  <!-- ════════════════════════════════════════════
-       MODE: PER ITEM (Custom Split)
-  ════════════════════════════════════════════ -->
   <ng-container *ngIf="splitMode === 'custom'">
 
-    <!-- Biaya Tambahan (shared across modes) -->
     <div class="main-card">
       <div class="card-section">
         <div class="section-label">
@@ -191,14 +181,12 @@
       </div>
     </div>
 
-    <!-- Person Cards -->
     <div class="people-list">
       <div
         class="person-card"
         *ngFor="let person of people; trackBy: trackByPersonId; let i = index"
         [style.animation-delay]="(i * 0.05) + 's'">
 
-        <!-- Person Header -->
         <div class="person-header">
           <div class="person-avatar">{{ person.name.charAt(0).toUpperCase() || '?' }}</div>
           <ion-input
@@ -213,7 +201,6 @@
           </button>
         </div>
 
-        <!-- Items List -->
         <div class="items-list" *ngIf="person.items.length > 0">
           <div
             class="item-row"
@@ -240,12 +227,10 @@
           </div>
         </div>
 
-        <!-- Empty items hint -->
         <div class="no-items-hint" *ngIf="person.items.length === 0">
           Belum ada item. Tap "+ Tambah Item" untuk mulai.
         </div>
 
-        <!-- Person Footer -->
         <div class="person-footer">
           <button class="add-item-btn" (click)="addItem(person)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -261,7 +246,6 @@
       </div>
     </div>
 
-    <!-- Add Person Button -->
     <button class="add-person-btn" (click)="addPerson()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
         <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -272,7 +256,6 @@
       Tambah Orang
     </button>
 
-    <!-- Result: Per Person -->
     <div class="custom-result-card" *ngIf="customGrandTotal > 0">
       <div class="custom-result-header">
         <p class="result-label">Rincian Tagihan</p>
@@ -306,7 +289,6 @@
       </div>
     </div>
 
-    <!-- Empty custom state -->
     <div class="custom-empty" *ngIf="customGrandTotal === 0">
       <span>👆 Tambahkan item untuk melihat hasil</span>
     </div>
@@ -328,7 +310,6 @@
     </div>
   </div>
 
-  <!-- ── Action Button ── -->
   <div class="action-section">
     <ion-button expand="block" shape="round" class="share-btn" (click)="shareResult()">
       <svg slot="start" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -338,7 +319,6 @@
     </ion-button>
   </div>
 
-  <!-- Hidden Receipt Template -->
   <div id="receipt-template" class="receipt-container">
     <div class="receipt-header">
       <h2>PatunganNyok</h2>
@@ -346,7 +326,6 @@
     </div>
     <div class="receipt-divider"></div>
 
-    <!-- Even mode receipt -->
     <ng-container *ngIf="splitMode === 'even'">
       <div class="receipt-row">
         <span>Total Tagihan</span>
@@ -371,7 +350,6 @@
       </div>
     </ng-container>
 
-    <!-- Custom mode receipt -->
     <ng-container *ngIf="splitMode === 'custom'">
       <ng-container *ngFor="let p of people">
         <div class="receipt-row">

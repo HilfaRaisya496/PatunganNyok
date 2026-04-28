@@ -13,17 +13,13 @@ import { Person, SplitItem } from '../models/split-item.model';
   standalone: false,
 })
 export class HomePage {
-  // ── Mode Toggle ──────────────────────────────────────
   splitMode: 'even' | 'custom' = 'even';
 
-  // ── Mode: Rata (Even Split) ───────────────────────────
   billAmount: number = 0;
   numPeople: number = 1;
   tipPercent: number = 0;
   servicePercent: number = 0;
   roundResult: boolean = false;
-
-  // ── Mode: Per Item (Custom Split) ─────────────────────
   people: Person[] = [
     this.createPerson('Orang 1'),
     this.createPerson('Orang 2'),
@@ -31,24 +27,17 @@ export class HomePage {
   showItemDetailsInReceipt: boolean = true;
 
   constructor(private historyService: HistoryService) { }
-
-  // ─────────────────────────────────────────────────────
-  // Even Split Computed
-  // ─────────────────────────────────────────────────────
   get totalPerPerson(): number {
-    let total = this.billAmount;
-    total += (total * this.tipPercent) / 100;
-    total += (total * this.servicePercent) / 100;
+    const base = this.billAmount;
+    const tipAmount = (base * this.tipPercent) / 100;
+    const serviceAmount = (base * this.servicePercent) / 100;
+    const total = base + tipAmount + serviceAmount;
     let per = total / (this.numPeople || 1);
     if (this.roundResult) {
       per = Math.ceil(per);
     }
     return per;
   }
-
-  // ─────────────────────────────────────────────────────
-  // Custom Split: People & Items Management
-  // ─────────────────────────────────────────────────────
   private createPerson(name: string): Person {
     return {
       id: Date.now().toString() + Math.random(),
@@ -82,55 +71,38 @@ export class HomePage {
     return person.items.filter((i) => (i.price || 0) > 0 || (i.name || '').trim().length > 0).length;
   }
 
-  // ─────────────────────────────────────────────────────
-  // Custom Split: Calculation
-  // ─────────────────────────────────────────────────────
-
-  /** Total harga item milik satu orang */
   personSubtotal(person: Person): number {
     return person.items.reduce((sum, item) => sum + (item.price || 0), 0);
   }
 
-  /** Grand total semua item semua orang */
   get customGrandTotal(): number {
     return this.people.reduce((sum, p) => sum + this.personSubtotal(p), 0);
   }
 
-  /** Tip + service dalam nilai Rupiah (dari grand total) */
   get customTipAmount(): number {
     return (this.customGrandTotal * this.tipPercent) / 100;
   }
+  
   get customServiceAmount(): number {
     return (this.customGrandTotal * this.servicePercent) / 100;
   }
 
-  /** Total tagihan setelah tip & service */
   get customTotalWithFees(): number {
     return this.customGrandTotal + this.customTipAmount + this.customServiceAmount;
   }
 
-  /**
-   * Porsi proporsional tip untuk orang ini
-   */
   personTipAmount(person: Person): number {
     const sub = this.personSubtotal(person);
     const grand = this.customGrandTotal || 1;
     return this.customTipAmount * (sub / grand);
   }
 
-  /**
-   * Porsi proporsional service untuk orang ini
-   */
   personServiceAmount(person: Person): number {
     const sub = this.personSubtotal(person);
     const grand = this.customGrandTotal || 1;
     return this.customServiceAmount * (sub / grand);
   }
 
-  /**
-   * Total yang harus dibayar satu orang:
-   * subtotal + porsi proporsional tip & service
-   */
   personTotal(person: Person): number {
     const sub = this.personSubtotal(person);
     const tip = this.personTipAmount(person);
@@ -144,10 +116,6 @@ export class HomePage {
 
   trackByPersonId(_: number, p: Person) { return p.id; }
   trackByItemId(_: number, i: SplitItem) { return i.id; }
-
-  // ─────────────────────────────────────────────────────
-  // History & Sharing
-  // ─────────────────────────────────────────────────────
   saveToHistory() {
     if (this.splitMode === 'even') {
       this.historyService.addHistory({

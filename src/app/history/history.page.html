@@ -87,6 +87,10 @@
           <div class="custom-total">{{ person.total | currency:'IDR':'symbol':'1.0-0' }}</div>
         </div>
 
+        <div class="custom-fee-row" *ngIf="(item.tipAmount || 0) > 0">
+          <span>Tip ({{ item.tipPercent || 0 }}%)</span>
+          <span>+{{ item.tipAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
+        </div>
         <div class="custom-fee-row" *ngIf="(item.serviceAmount || 0) > 0">
           <span>Servis ({{ item.servicePercent || 0 }}%)</span>
           <span>+{{ item.serviceAmount | currency:'IDR':'symbol':'1.0-0' }}</span>
